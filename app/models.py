@@ -11,12 +11,14 @@ def slugify(s):
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(140))
-    slug = db.Column(db.String(140), unique=True) #урл
+    # урл
+    slug = db.Column(db.String(140), unique=True)
     body = db.Column(db.Text)
     created = db.Column(db.DateTime, default=datetime.now())
 
-    def __init__(self, *args, **kwargs): #*args - можно передать неогранченное количество позиционных аргументов, **kwargs - можно передать именнованные аргументы
-        super(Post, self).__init__(*args, **kwargs) #аргументы идут через транзит в конструктор класса Modul
+    def __init__(self, *args, **kwargs):
+        # аргументы идут через транзит в конструктор класса Model
+        super(Post, self).__init__(*args, **kwargs)
         self.generate_slug()
 
     def generate_slug(self):

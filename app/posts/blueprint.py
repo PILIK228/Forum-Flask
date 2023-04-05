@@ -1,13 +1,11 @@
 from flask import Blueprint
 from flask import render_template
 
-#from models import Post
+#конструктор класса блюпринт
+posts = Blueprint('posts',__name__, template_folder='templates')
 
-posts = Blueprint('posts',__name__, template_folder='templates') #конструктор класса блюпринт
 
 @posts.route('/')
 def index():
-    #posts = Post.query.all()
-    return render_template('posts/index.html') #получаем списко постов
-
-    #return render_template('posts/index.html', posts=posts)
+    # получаем списоr постов
+    return render_template('posts/index.html')
