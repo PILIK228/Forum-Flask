@@ -12,5 +12,13 @@
 
 
 {% block content %}
-    Blueprint some content page
+
+    {% for post in posts%}
+
+        <p>
+            {{ post.title }}
+        </p>
+
+    {% endfor %}
+
 {% endblock %}
