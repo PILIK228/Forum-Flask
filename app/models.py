@@ -17,7 +17,6 @@ post_tags = db.Table('post_tags',
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(140))
-    # урл
     slug = db.Column(db.String(140), unique=True)
     body = db.Column(db.Text)
     created = db.Column(db.DateTime, default=datetime.now())
@@ -27,7 +26,7 @@ class Post(db.Model):
         super(Post, self).__init__(*args, **kwargs)
         self.generate_slug()
 
-    tags = db.relationship('Tag', secondary=post_tags, backref=db.backref('posts'), lazy='dynamic')
+    tags = db.relationship('Tag', secondary=post_tags, backref=db.backref('posts', lazy='dynamic'))
 
     def generate_slug(self):
         if self.title:
