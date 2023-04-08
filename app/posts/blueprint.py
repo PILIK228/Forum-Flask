@@ -24,6 +24,7 @@ def create_post():
 
         try:
             post = Post(title=title, body=body)
+            db.session.add(post)
             db.session.commit()
         except:
             print('Something wrong')
@@ -39,11 +40,21 @@ def index():
 
     q = request.args.get('q')
 
-    if q:
-        posts = Post.query.filter(Post.title.contains(q) | Post.body.contains(q)).all()
+    page = request.args.get('page')
+
+    if page and page.isdigit():
+         page = int(page)
     else:
-        posts = Post.query.all()
-    return render_template('posts/index.html', posts=posts)
+        page = 1
+
+    if q:
+        posts = Post.query.filter(Post.title.contains(q) | Post.body.contains(q)) #.all()
+    else:
+        posts = Post.query.order_by(Post.created.desc())
+
+    pages = posts.paginate(page=page, per_page=5)
+
+    return render_template('posts/index.html', pages=pages)
 
 
 #http://localhost/blog/first-post
